@@ -1,0 +1,51 @@
+* { 
+  font-family:sans-serif;
+}
+h1 { 
+  font-size: 2em; 
+}
+header { 
+  text-align: center;
+  margin: auto;
+  max-width: 50em; 
+}
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 1280px;
+  height: 720px;
+  border: 1px solid #000000;
+}
+
+#caseArea svg {
+	cursor: pointer;
+	margin: 10px;
+}
+
+.briefcase {
+	fill:rgb(192,192,192);
+}
+
+#caseArea {
+	float: left;
+	display: table;
+}
+
+.caseRow {
+	margin: auto;
+	display: table;
+}
+
+.caseValue {
+	fill:rgb(255,255,0);
+}
+
+#moneyArea {
+	float: left;
+	display: table;
+}
+
+#moneyArea svg {
+	margin: 10px;
+}
