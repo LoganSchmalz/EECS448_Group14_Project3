@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Deal or No Deal</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
     <body>
         <div>
             <h1>Deal or No Deal</h1>
             <p>Welcome to Deal or No Deal!</p>
-			<p>Press F12 to open the console before clicking start.</p>
         </div>
-        <div>
-	    	<button type="button" id="startButton">Start</button>
-        </div>
-
 		
-		<div>
+		<details>
+			<summary>Rules</summary>
 			<p>There are 26 cases with values ranging from $.01 to $1,000,000.</p>
 			<p>You will be asked to pick a case. This is your case for the game.</p>
 			<p>You will then eliminate a number of cases. Once done, the banker will<br>make you an offer to buy your case from you. You may choose Deal or<br>no Deal. </p>
 			<p>This process then repeats.</p>
 			<p>The game ends either when you make a deal or the last case will be eliminated.</p>
+		</details>
+		
+        <div>
+	    	<button type="button" id="startButton">Start</button>
+        </div>
+		
+		<div id=gameArea>
+			<div id=caseArea></div>
+			<div id=moneyArea></div>
 		</div>
+		
     </body>
 	<script src="main.js"></script>
 	<script src="gameplay.js"></script>
+	<script src="render.js"></script>
 </html>
