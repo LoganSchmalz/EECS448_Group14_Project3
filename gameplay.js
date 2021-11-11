@@ -27,6 +27,44 @@ function setupCases(cases, caseValues)
 }
 */
 
+/*setting up the US / UK arrays
+let usArray = [6,5,4,3,2,1,1,1,1,1,1]
+let ukArray = [5,3,3,3,3,1,1,1]
+
+function ukCase23()
+{
+	let selection = getRandomInt(0,4)
+	if selection == 0
+	{
+
+	}
+	else if selection == 1
+	{
+
+	}
+	else if selection == 2
+	{
+
+	}
+	else if selection == 3
+	{
+
+	}
+	else if selection == 4
+	{
+
+	}
+}
+
+*/
+//from https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data
  */
