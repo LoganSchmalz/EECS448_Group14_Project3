@@ -1,5 +1,6 @@
 //Array for case values
 let caseValues = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,25000,50000,75000,100000,200000,300000,400000,500000,750000,1000000];
+let caseValuesUK = [];
 
 //Payout if all cases are there
 let basePayout = 11246.7697;
@@ -7,10 +8,14 @@ let basePayout = 11246.7697;
 //Global variable for bank offer
 let bankOfferNum = 0;
 
+//0 for US 1 for UK
+let ruleset = 0;
+
 
 //cases stored in array of Cases, which consists of CaseName and CaseNumber tuples
 //Global array that will be modified throughout the game
 let cases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
+let UKcases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
 //do we need a player global variable? what to keep track of there?
 
 let heldCase = -1;
@@ -27,36 +32,37 @@ function setupCases(cases, caseValues)
 }
 */
 
-/*setting up the US / UK arrays
-let usArray = [6,5,4,3,2,1,1,1,1,1,1]
-let ukArray = [5,3,3,3,3,1,1,1]
+//setting up the US / UK arrays
+let usArrayElim = [6,5,4,3,2,1,1,1,1,1,1]
+let ukArrayElim = [5,3,3,3,3,1,1,1]
 
 function ukCase23()
 {
 	let selection = getRandomInt(0,4)
-	if selection == 0
+	if (selection == 0)
 	{
-
+		//10 thousand pounds
+		
 	}
-	else if selection == 1
+	else if (selection == 1)
 	{
-
+		//Half
 	}
-	else if selection == 2
+	else if (selection == 2)
 	{
-
+		//Money Back
 	}
-	else if selection == 3
+	else if (selection == 3)
 	{
-
+		//Double
 	}
-	else if selection == 4
+	else if (selection == 4)
 	{
-
+		//Nothing
 	}
 }
 
-*/
+
 //from https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -65,10 +71,96 @@ function getRandomInt(min, max) {
 }
 
 
+
+function gameplay(ruleset)
+{
+	if (ruleset == 1)
+	{
+		gameplayUS();
+	}
+	if (ruleset == 2)
+	{
+		gameplayUK();
+	}
+	if (ruleset == 3)
+	{
+
+	}
+}
+
+
 /**
- * @desc This function runs the main gameplay loop, we allow it to access and modify global game data
+ * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
-function gameplayLoop() {
+function gameplayUS(ruleset) {
+	caseValues = shuffle(caseValues);
+	
+	result = "";
+	while (!Number.isInteger(result) || !cases.includes(result)) {
+		result = parseInt(window.prompt("Pick a case to hold (between 1 and 26)", ""));
+		console.log(result);
+	}
+	idx = cases.indexOf(result);
+	heldCase = result;
+	heldValue = caseValues[idx];
+	caseValues.splice(idx, 1);
+	cases.splice(idx, 1);
+	console.log(cases);
+	
+	i = 6;
+	while (cases.length > 2) {
+		console.log("You have " + i + " cases to eliminate this round.\n");
+		for (j = i; j > 0; j--) {
+			result = "";
+			while (!Number.isInteger(result) || !cases.includes(result)) {
+				result = parseInt(window.prompt("Pick a case to eliminate", ""));
+			}
+			idx = cases.indexOf(result);
+			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValues[idx]) + ".\n");
+			caseValues.splice(idx, 1);
+			cases.splice(idx, 1);
+			console.log("The remaining cases are " + cases + ".\n");
+			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
+			console.log("The remaining values are " + temp + ".\n");
+		}
+		offer = bankOffer();
+		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
+		
+		result = "";
+		while (result != "Y" && result != "N") {
+			result = window.prompt("Deal or no deal (y/n)?", "");
+			result = result.toUpperCase();
+		}
+		if (result == "Y") {
+			console.log("You won " + formatMoney(offer) + "!\n");
+			console.log("Your case had a value of " + formatMoney(heldValue) + ".");
+			if (heldValue <= offer) 
+				console.log("You made a good deal!");
+			else
+				console.log("You made a bad deal!");
+			return;
+		}
+		i = (i > 1) ? i-1 : 1;
+	}
+	console.log("You have chosen your case and have won $" + heldValue + "!\n");
+	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
+	result = "";
+	while (result != "Y" && result != "N") {
+		result = window.prompt("Would you like to swap cases (y/n)?", "");
+		result = result.toUpperCase();
+	}
+	switch (result) {
+		case "Y": console.log("You won $" + caseValues[0] + "!\n"); break;
+		case "N": console.log("You won $" + heldValue + "!\n"); break;
+	}*/
+}
+
+
+
+/**
+ * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
+ */
+function gameplayUK(ruleset) {
 	caseValues = shuffle(caseValues);
 	
 	result = "";

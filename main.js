@@ -29,7 +29,10 @@ function startButtonRegister() {
             g_maxShips = document.getElementById("number_of_ships").value;
             g_mode = "start";
         }*/
-		gameplayLoop();
+
+        //unguarded (fix later)
+        let ruleset = prompt("What ruleset would you like to play with?\n1: US Ruleset\n2: UK Ruleset\n3: Multiple cases");
+		gameplay(ruleset);
     });
 }
 
