@@ -1,6 +1,6 @@
 //Array for case values
 let caseValues = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,25000,50000,75000,100000,200000,300000,400000,500000,750000,1000000];
-let caseValuesUK = [];
+let caseValuesUK = [.01,.1,.5,1,5,10,50,100,250,500,750,1000,3000,5000,10000,15000,20000,35000,50000,75000,100000,250000];
 
 //Payout if all cases are there
 let basePayout = 11246.7697;
@@ -34,7 +34,7 @@ function setupCases(cases, caseValues)
 
 //setting up the US / UK arrays
 let usArrayElim = [6,5,4,3,2,1,1,1,1,1,1]
-let ukArrayElim = [5,3,3,3,3,1,1,1]
+let ukArrayElim = [5,3,3,3,3,3]
 
 function ukCase23()
 {
