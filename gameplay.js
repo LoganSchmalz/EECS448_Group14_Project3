@@ -103,14 +103,14 @@ function gameplayUK() {
 	let j = i;
 	while (UKcases.length > 2) {
 		console.log("You have " + i + " cases to eliminate this round.\n");
-		while (k < ukArrayElim.length -1)
+		while (k < i)
 		{
 			result = "";
 			while (!Number.isInteger(result) || !UKcases.includes(result)) {
 				result = parseInt(window.prompt("Pick a case to eliminate", ""));
 			}
 			idx = UKcases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValuesUK[idx]) + ".\n");
+			console.log("You eliminated case " + result + " which contained " + formatMoneyUK(caseValuesUK[idx]) + ".\n");
 			caseValuesUK.splice(idx, 1);
 			UKcases.splice(idx, 1);
 			console.log("The remaining cases are " + UKcases + ".\n");
@@ -120,7 +120,7 @@ function gameplayUK() {
 		}
 		k = 0;
 		offer = bankOffer();
-		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
+		console.log("You have received an offer from the banker: " + formatMoneyUK(offer) + " for your case.\n");
 		
 		if (iIndex < ukArrayElim.length-1)
 		{
@@ -135,8 +135,8 @@ function gameplayUK() {
 			result = result.toUpperCase();
 		}
 		if (result == "Y") {
-			console.log("You won " + formatMoney(offer) + "!\n");
-			console.log("Your case had a value of " + formatMoney(heldValue) + ".");
+			console.log("You won " + formatMoneyUK(offer) + "!\n");
+			console.log("Your case had a value of " + formatMoneyUK(heldValue) + ".");
 			if (heldValue <= offer) 
 				console.log("You made a good deal!");
 			else
@@ -144,7 +144,7 @@ function gameplayUK() {
 			return;
 		}
 	}
-	console.log("You have chosen your case and have won $" + heldValue + "!\n");
+	console.log("You have chosen your case and have won £" + heldValue + "!\n");
 	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
 	result = "";
 	while (result != "Y" && result != "N") {
@@ -352,3 +352,7 @@ return bankOfferNum;
 function formatMoney(number) {
    return '$'+ number.toLocaleString('en-US');
 }
+
+function formatMoneyUK(number) {
+	return '£'+ number.toLocaleString('en-US');
+ }
