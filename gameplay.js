@@ -80,7 +80,7 @@ function gameplay(ruleset)
 
 
 /**
- * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
+ * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
  */
 function gameplayUK() {
 	caseValuesUK = shuffle(caseValuesUK);
@@ -98,9 +98,13 @@ function gameplayUK() {
 	console.log(UKcases);
 	
 	i = ukArrayElim[0];
+	let k = 0;
+	let iIndex = 0;
+	let j = i;
 	while (UKcases.length > 2) {
 		console.log("You have " + i + " cases to eliminate this round.\n");
-		for (j = i; j > 0; j--) {
+		while (k < ukArrayElim.length -1)
+		{
 			result = "";
 			while (!Number.isInteger(result) || !UKcases.includes(result)) {
 				result = parseInt(window.prompt("Pick a case to eliminate", ""));
@@ -112,10 +116,19 @@ function gameplayUK() {
 			console.log("The remaining cases are " + UKcases + ".\n");
 			temp = [heldValue].concat(caseValuesUK).sort((a, b) => a - b);
 			console.log("The remaining values are " + temp + ".\n");
+			k = k + 1; 
 		}
+		k = 0
 		offer = bankOffer();
 		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
 		
+		if (iIndex < ukArrayElim.length-1)
+		{
+		i = ukArrayElim[iIndex + 1];
+		iIndex = iIndex + 1;
+		j=i;
+		}
+
 		result = "";
 		while (result != "Y" && result != "N") {
 			result = window.prompt("Deal or no deal (y/n)?", "");
@@ -130,7 +143,6 @@ function gameplayUK() {
 				console.log("You made a bad deal!");
 			return;
 		}
-		i = (i > 1) ? i-1 : 1;
 	}
 	console.log("You have chosen your case and have won $" + heldValue + "!\n");
 	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
@@ -162,7 +174,7 @@ function gameplayUK() {
 
 
 /**
- * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
+ * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
 function gameplayUs() {
 	caseValues = shuffle(caseValues);
