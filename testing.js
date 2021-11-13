@@ -2,7 +2,7 @@
 
 function runTests()
 {
-    //Clears console to primt tests
+    //Clears console to print tests
     //console.clear()
 
     //Test 1: Does expectedPayout return a non-zero, positive number
@@ -26,9 +26,18 @@ function runTests()
 
 
     //Test 3
+    console.log("Test 3: Does seperateCases() remove a value while preserving order: ");
+    let testArray = [1,2,3,4,5];
+    let seperatedArray_test = separateCase(3,testArray);
+    if(seperatedArray_test[3] == 4)
+    {
+        console.log("Passed.\n");
+    }
+    else console.log("Failed.\n");
 
 
-
+    //Test 4
+    console.log("")
 
 
 
