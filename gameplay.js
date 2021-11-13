@@ -1,6 +1,9 @@
 //Array for case values
-let caseValues = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,25000,50000,75000,100000,200000,300000,400000,500000,750000,1000000];
-let caseValuesUK = [.01,.1,.5,1,5,10,50,100,250,500,750,1000,3000,5000,10000,15000,20000,35000,50000,75000,100000,250000];
+//first two are const for resetting the game and remembering possible values
+const caseValuesUS = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,25000,50000,75000,100000,200000,300000,400000,500000,750000,1000000];
+const caseValuesUK = [.01,.1,.5,1,5,10,50,100,250,500,750,1000,3000,5000,10000,15000,20000,35000,50000,75000,100000,250000];
+//this one is used in gameplay, it is set to the chosen set of cases for the rules
+let caseValues = [];
 
 //Payout if all cases are there
 let basePayout_US = 11246.7697;
@@ -88,7 +91,7 @@ function gameplay(ruleset)
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
  */
 function gameplayUK() {
-	caseValuesUK = shuffle(caseValuesUK);
+	caseValues = shuffle(caseValuesUK);
 
 	result = "";
 	while (!Number.isInteger(result) || !UKcases.includes(result)) {
@@ -97,8 +100,8 @@ function gameplayUK() {
 	}
 	idx = UKcases.indexOf(result);
 	heldCase = result;
-	heldValue = caseValuesUK[idx];
-	caseValuesUK.splice(idx, 1);
+	heldValue = caseValues[idx];
+	caseValues.splice(idx, 1);
 	UKcases.splice(idx, 1);
 	console.log(UKcases);
 	
@@ -115,11 +118,11 @@ function gameplayUK() {
 				result = parseInt(window.prompt("Pick a case to eliminate", ""));
 			}
 			idx = UKcases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoneyUK(caseValuesUK[idx]) + ".\n");
-			caseValuesUK.splice(idx, 1);
+			console.log("You eliminated case " + result + " which contained " + formatMoneyUK(caseValues[idx]) + ".\n");
+			caseValues.splice(idx, 1);
 			UKcases.splice(idx, 1);
 			console.log("The remaining cases are " + UKcases + ".\n");
-			temp = [heldValue].concat(caseValuesUK).sort((a, b) => a - b);
+			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
 			console.log("The remaining values are " + temp + ".\n");
 			k = k + 1; 
 		}
@@ -161,14 +164,14 @@ function gameplayUK() {
 	else {
 		console.log("Thanks for playing!");
 	}
-	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
+	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValuesUS[0] + ".\n");
 	result = "";
 	while (result != "Y" && result != "N") {
 		result = window.prompt("Would you like to swap cases (y/n)?", "");
 		result = result.toUpperCase();
 	}
 	switch (result) {
-		case "Y": console.log("You won $" + caseValues[0] + "!\n"); break;
+		case "Y": console.log("You won $" + caseValuesUS[0] + "!\n"); break;
 		case "N": console.log("You won $" + heldValue + "!\n"); break;
 	}*/
 }
@@ -192,8 +195,8 @@ function gameplayUK() {
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
-function gameplayUs() {
-	caseValues = shuffle(caseValues);
+function gameplayUS() {
+	caseValues = shuffle(caseValuesUS);
 	
 	result = "";
 	while (!Number.isInteger(result) || !cases.includes(result)) {
@@ -340,7 +343,7 @@ function expectedPayout(ruleset){
 	else if(ruleset == 0)
 	{
 		//number of cases left
-		let n = caseValuesUK.length;
+		let n = caseValues.length;
 
 		  //probability of selecting each case
 		  let Px = (1/n);
@@ -351,7 +354,7 @@ function expectedPayout(ruleset){
 		  //summation of P(x)*x
 		  for(let i=0; i < n; i++)
 		  {
-			payout = payout + (caseValuesUK[i]*Px)
+			payout = payout + (caseValues[i]*Px)
 		  }
 		return payout;
 	}
