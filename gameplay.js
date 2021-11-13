@@ -3,7 +3,8 @@ let caseValues = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,2
 let caseValuesUK = [.01,.1,.5,1,5,10,50,100,250,500,750,1000,3000,5000,10000,15000,20000,35000,50000,75000,100000,250000];
 
 //Payout if all cases are there
-let basePayout = 11246.7697;
+let basePayout_US = 11246.7697;
+let basePayout_UK = 14814.20043;
 
 //Global variable for bank offer
 let bankOfferNum = 0;
@@ -301,21 +302,44 @@ function separateCase(choice, cases)
  * @returns expected value of remaining cases
  */
 function expectedPayout(){
-  //number of cases left
-  let n = caseValues.length;
+	//if US rules are selected	
+	if(ruleset == 1)
+    {
+  		//number of cases left
+  		let n = caseValues.length;
 
-  //probability of selecting each case
-  let Px = (1/n);
+  		//probability of selecting each case
+  		let Px = (1/n);
   
-  //expected payout
-  let payout = 0;
+  		//expected payout
+  		let payout = 0;
 
-  //summation of P(x)*x
-  for(let i=0; i < n; i++)
-  {
-    payout = payout + (caseValues[i]*Px)
-  }
-  return payout;
+  		//summation of P(x)*x
+  		for(let i=0; i < n; i++)
+  		{
+   		 	payout = payout + (caseValues[i]*Px)
+  		}
+  		return payout;
+    }
+
+	else if(ruleset == 0)
+	{
+		//number of cases left
+		let n = caseValuesUK.length;
+
+		  //probability of selecting each case
+		  let Px = (1/n);
+		  
+		  //expected payout
+		  let payout = 0;
+		
+		  //summation of P(x)*x
+		  for(let i=0; i < n; i++)
+		  {
+			payout = payout + (caseValuesUK[i]*Px)
+		  }
+		return payout;
+	}
 }
 
 
@@ -325,26 +349,54 @@ function expectedPayout(){
  * @returns the offer from the bank
  */
 function bankOffer(){
-  //calls expectedPayout method to get value of the current expected payout
-  let expPayout = expectedPayout();
 
-  //if expected value of remaining cases is less than initial expected value
-  if(expPayout <= basePayout)
-  {
-    let rand = Math.random() * (1 - .75) + .75;
-    //multiplies by random number from .75-.99
-    bankOfferNum = expPayout * rand;
-  }
-  //if expected value of remaining cases is greater than initial expected value
-  else if(expPayout > basePayout)
-  {
-    let rand = Math.random() * (1.81 - 1.1) + 1.1;
-    //multiplies by random number from 1.1-1.8
-    bankOfferNum = expPayout * rand;
-  }
+	//if US rules are selected
+	if(ruleset == 1)
+	{
+ 		//calls expectedPayout method to get value of the current expected payout
+  		let expPayout = expectedPayout();
 
-return bankOfferNum;
+  		//if expected value of remaining cases is less than initial expected value
+  		if(expPayout <= basePayout_US)
+  		{
+    		let rand = Math.random() * (1 - .75) + .75;
+    		//multiplies by random number from .75-.99
+    		bankOfferNum = expPayout * rand;
+  		}
+ 		//if expected value of remaining cases is greater than initial expected value
+  		else if(expPayout > basePayout_US)
+  		{
+    		let rand = Math.random() * (1.81 - 1.1) + 1.1;
+    		//multiplies by random number from 1.1-1.8
+    		bankOfferNum = expPayout * rand;
+    	}
 
+		return bankOfferNum;
+	}
+
+	//if UK rules are selected
+	else if(ruleset == 0)
+	{
+ 		//calls expectedPayout method to get value of the current expected payout
+		 let expPayout = expectedPayout();
+
+		 //if expected value of remaining cases is less than initial expected value
+		 if(expPayout <= basePayout_UK)
+		 {
+		   let rand = Math.random() * (1 - .75) + .75;
+		   //multiplies by random number from .75-.99
+		   bankOfferNum = expPayout * rand;
+		 }
+		//if expected value of remaining cases is greater than initial expected value
+		 else if(expPayout > basePayout_UK)
+		 {
+		   let rand = Math.random() * (1.81 - 1.1) + 1.1;
+		   //multiplies by random number from 1.1-1.8
+		   bankOfferNum = expPayout * rand;
+	   }
+
+	   return bankOfferNum;
+	}
 }
 
 
