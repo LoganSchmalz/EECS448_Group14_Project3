@@ -8,8 +8,7 @@ let basePayout = 11246.7697;
 //Global variable for bank offer
 let bankOfferNum = 0;
 
-//0 for US 1 for UK
-let ruleset = 0;
+
 
 
 //cases stored in array of Cases, which consists of CaseName and CaseNumber tuples
@@ -21,16 +20,7 @@ let UKcases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
 let heldCase = -1;
 let heldValue = 0;
 
-//this way we can reset the cases for new game and or make sure cases are all there or something 
-/*
-function setupCases(cases, caseValues)
-{
-  for(let i = 0; i < 25; i++)
-  {
-    cases.push((i+1,caseValues[i]));
-  }
-}
-*/
+
 
 //setting up the US / UK arrays
 let usArrayElim = [6,5,4,3,2,1,1,1,1,1,1]
@@ -92,35 +82,35 @@ function gameplay(ruleset)
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
-function gameplayUS(ruleset) {
-	caseValues = shuffle(caseValues);
-	
+function gameplayUK() {
+	caseValuesUK = shuffle(caseValuesUK);
+
 	result = "";
-	while (!Number.isInteger(result) || !cases.includes(result)) {
-		result = parseInt(window.prompt("Pick a case to hold (between 1 and 26)", ""));
+	while (!Number.isInteger(result) || !UKcases.includes(result)) {
+		result = parseInt(window.prompt("Pick a case to hold (between 1 and 22)", ""));
 		console.log(result);
 	}
-	idx = cases.indexOf(result);
+	idx = UKcases.indexOf(result);
 	heldCase = result;
-	heldValue = caseValues[idx];
-	caseValues.splice(idx, 1);
-	cases.splice(idx, 1);
-	console.log(cases);
+	heldValue = caseValuesUK[idx];
+	caseValuesUK.splice(idx, 1);
+	UKcases.splice(idx, 1);
+	console.log(UKcases);
 	
-	i = 6;
-	while (cases.length > 2) {
+	i = ukArrayElim[0];
+	while (UKcases.length > 2) {
 		console.log("You have " + i + " cases to eliminate this round.\n");
 		for (j = i; j > 0; j--) {
 			result = "";
-			while (!Number.isInteger(result) || !cases.includes(result)) {
+			while (!Number.isInteger(result) || !UKcases.includes(result)) {
 				result = parseInt(window.prompt("Pick a case to eliminate", ""));
 			}
-			idx = cases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValues[idx]) + ".\n");
-			caseValues.splice(idx, 1);
+			idx = UKcases.indexOf(result);
+			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValuesUK[idx]) + ".\n");
+			caseValuesUK.splice(idx, 1);
 			cases.splice(idx, 1);
-			console.log("The remaining cases are " + cases + ".\n");
-			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
+			console.log("The remaining cases are " + UKcases + ".\n");
+			temp = [heldValue].concat(caseValuesUK).sort((a, b) => a - b);
 			console.log("The remaining values are " + temp + ".\n");
 		}
 		offer = bankOffer();
@@ -157,10 +147,24 @@ function gameplayUS(ruleset) {
 
 
 
+
+
+
+
+
+//BIG GAP SO YOU DONT CONFUSE 'EM
+
+
+
+
+
+
+
+
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
  */
-function gameplayUK(ruleset) {
+function gameplayUs() {
 	caseValues = shuffle(caseValues);
 	
 	result = "";
