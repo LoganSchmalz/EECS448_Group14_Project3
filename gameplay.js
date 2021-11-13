@@ -112,13 +112,13 @@ function gameplayUK() {
 			idx = UKcases.indexOf(result);
 			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValuesUK[idx]) + ".\n");
 			caseValuesUK.splice(idx, 1);
-			cases.splice(idx, 1);
+			UKcases.splice(idx, 1);
 			console.log("The remaining cases are " + UKcases + ".\n");
 			temp = [heldValue].concat(caseValuesUK).sort((a, b) => a - b);
 			console.log("The remaining values are " + temp + ".\n");
 			k = k + 1; 
 		}
-		k = 0
+		k = 0;
 		offer = bankOffer();
 		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
 		
