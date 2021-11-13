@@ -120,7 +120,7 @@ function gameplayUK() {
 			k = k + 1; 
 		}
 		k = 0;
-		offer = bankOffer();
+		offer = bankOffer(0);
 		console.log("You have received an offer from the banker: " + formatMoneyUK(offer) + " for your case.\n");
 		
 		if (iIndex < ukArrayElim.length-1)
@@ -208,7 +208,7 @@ function gameplayUs() {
 			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
 			console.log("The remaining values are " + temp + ".\n");
 		}
-		offer = bankOffer();
+		offer = bankOffer(1);
 		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
 		
 		result = "";
@@ -301,7 +301,7 @@ function separateCase(choice, cases)
  * @desc function that calculates the expected value of the remaining cases
  * @returns expected value of remaining cases
  */
-function expectedPayout(){
+function expectedPayout(ruleset){
 	//if US rules are selected	
 	if(ruleset == 1)
     {
@@ -348,13 +348,13 @@ function expectedPayout(){
  * @desc function that takes expected value of remaining cases and multiplies by random double in a specific range to generate offer from bank
  * @returns the offer from the bank
  */
-function bankOffer(){
+function bankOffer(ruleset){
 
 	//if US rules are selected
 	if(ruleset == 1)
 	{
  		//calls expectedPayout method to get value of the current expected payout
-  		let expPayout = expectedPayout();
+  		let expPayout = expectedPayout(1);
 
   		//if expected value of remaining cases is less than initial expected value
   		if(expPayout <= basePayout_US)
@@ -378,7 +378,7 @@ function bankOffer(){
 	else if(ruleset == 0)
 	{
  		//calls expectedPayout method to get value of the current expected payout
-		 let expPayout = expectedPayout();
+		 let expPayout = expectedPayout(0);
 
 		 //if expected value of remaining cases is less than initial expected value
 		 if(expPayout <= basePayout_UK)
