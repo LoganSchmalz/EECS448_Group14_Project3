@@ -93,7 +93,8 @@ function gameplay(ruleset)
  */
 function gameplayUK() {
 	caseValuesConst = caseValuesUK;
-	caseValues = shuffle(caseValuesConst);
+	caseValues = shuffle([...caseValuesUK]); //... needed to create copy, JS arrays are set by reference not by content
+	//renderGame([5,6,6,5], formatMoneyUK);
 
 	result = "";
 	while (!Number.isInteger(result) || !UKcases.includes(result)) {
@@ -199,7 +200,8 @@ function gameplayUK() {
  */
 function gameplayUS() {
 	caseValuesConst = caseValuesUS;
-	caseValues = shuffle(caseValuesConst);
+	caseValues = shuffle([...caseValuesUS]); //... needed to create copy, JS arrays are set by reference not by content
+	//renderGame([6,7,7,6], formatMoney);
 	
 	result = "";
 	while (!Number.isInteger(result) || !cases.includes(result)) {
@@ -427,5 +429,5 @@ function formatMoney(number) {
 }
 
 function formatMoneyUK(number) {
-	return '£'+ number.toLocaleString('en-US');
+	return '&#163;'+ number.toLocaleString('en-US');
  }
