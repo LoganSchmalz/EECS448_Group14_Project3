@@ -2,7 +2,8 @@
 //first two are const for resetting the game and remembering possible values
 const caseValuesUS = [0.01,1,5,10,25,50,75,100,200,300,400,500,750,1000,5000,10000,25000,50000,75000,100000,200000,300000,400000,500000,750000,1000000];
 const caseValuesUK = [.01,.1,.5,1,5,10,50,100,250,500,750,1000,3000,5000,10000,15000,20000,35000,50000,75000,100000,250000];
-//this one is used in gameplay, it is set to the chosen set of cases for the rules
+//these two are dynamic and used in gameplay/rendering, it is set to the chosen set of cases for the rules
+let caseValuesConst = [];
 let caseValues = [];
 
 //Payout if all cases are there
@@ -91,7 +92,8 @@ function gameplay(ruleset)
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
  */
 function gameplayUK() {
-	caseValues = shuffle(caseValuesUK);
+	caseValuesConst = caseValuesUK;
+	caseValues = shuffle(caseValuesConst);
 
 	result = "";
 	while (!Number.isInteger(result) || !UKcases.includes(result)) {
@@ -196,7 +198,8 @@ function gameplayUK() {
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
 function gameplayUS() {
-	caseValues = shuffle(caseValuesUS);
+	caseValuesConst = caseValuesUS;
+	caseValues = shuffle(caseValuesConst);
 	
 	result = "";
 	while (!Number.isInteger(result) || !cases.includes(result)) {
