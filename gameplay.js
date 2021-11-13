@@ -27,29 +27,33 @@ let heldValue = 0;
 let usArrayElim = [6,5,4,3,2,1,1,1,1,1,1]
 let ukArrayElim = [5,3,3,3,3,3]
 
-function ukCase23()
+function ukCase23(heldValue)
 {
-	let selection = getRandomInt(0,4)
+	let selection = getRandomInt(0,4);
 	if (selection == 0)
 	{
 		//10 thousand pounds
-		
+		console.log("Box 23 contained +£10,000, bringing your total amount won to " +  formatMoneyUK(heldValue + 10000) + "!");
 	}
 	else if (selection == 1)
 	{
 		//Half
+		console.log("Box 23 contained 'Half', bringing your total amount won to " +  formatMoneyUK(heldValue/2) + ".");
 	}
 	else if (selection == 2)
 	{
 		//Money Back
+		console.log("Box 23 contained 'Money Back', which means you still win " +  formatMoneyUK(heldValue/2) + ".");
 	}
 	else if (selection == 3)
 	{
 		//Double
+		console.log("Box 23 contained 'Double', which means you now win " +  formatMoneyUK(heldValue*2) + "!");
 	}
 	else if (selection == 4)
 	{
 		//Nothing
+		console.log("Box 23 contained 'Nothing', which means you go home with absolutely nothing.");
 	}
 }
 
@@ -146,6 +150,17 @@ function gameplayUK() {
 		}
 	}
 	console.log("You have chosen your case and have won £" + heldValue + "!\n");
+	let b23 = "";
+	while (b23 != "Y" && b23 != "N") {
+		b23= window.prompt("Would you like to purchase case 23 (y/n)?", "");
+		b23 = b23.toUpperCase();
+	}
+	if (b23 == "Y") {
+		ukCase23(heldValue);
+	}
+	else {
+		console.log("Thanks for playing!");
+	}
 	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
 	result = "";
 	while (result != "Y" && result != "N") {
