@@ -305,6 +305,7 @@ function chooseCase(i)
 		temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
 		console.log("The remaining values are " + temp + ".\n");
 		casesEliminated++;
+		document.getElementById(`val${val}`).style.visibility = "hidden";	
 	} else {
 		heldCase = i;
 		heldValue = val;
@@ -314,7 +315,6 @@ function chooseCase(i)
 		round++;
 	}
 	document.getElementById(`case${i}`).style.visibility = "hidden";
-	document.getElementById(`val${val}`).style.visibility = "hidden";	
 }
 
 
