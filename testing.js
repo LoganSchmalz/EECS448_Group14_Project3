@@ -8,6 +8,7 @@ function runTests()
     //Test 1: Does expectedPayout return a non-zero, positive number
     console.log("Test 1: Does expectedPayout() return a non-zero, positive number: ");
     let expecVal_test = expectedPayout(1);
+    console.log(expecVal_test);
     if(expecVal_test > 0)
     {
         console.log("Passed.\n");
@@ -28,7 +29,7 @@ function runTests()
     //Test 3
     console.log("Test 3: Does seperateCases() remove a value while preserving order: ");
     let testArray = [1,2,3,4,5];
-    let seperatedArray_test = seperateCase(3,testArray);
+    let seperatedArray_test = chooseCase(3,testArray);
     if(seperatedArray_test[3] == 4)
     {
         console.log("Passed.\n");
