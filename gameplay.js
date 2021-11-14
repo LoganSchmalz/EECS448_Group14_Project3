@@ -231,7 +231,7 @@ function gameloopUS() {
 			message("Please pick a case to hold.");
 			choosingCase = true;
 			break;
-		case usArrayElim.length+1:
+		case usArrayElim.length:
 			message("You have chosen your case and have won $" + heldValue + "!\n")
 			return;
 		default:
@@ -244,7 +244,6 @@ function gameloopUS() {
 				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your case.\n");
 				choosingOffer = true;
 				document.getElementById("offer").style.display = "block";
-				if (round == usArrayElim.length-1) { round++; } //ensures last round only asks to accept an offer and then goes to game end if offer is declined
 			}
 			break;
 	}
