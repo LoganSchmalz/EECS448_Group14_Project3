@@ -39,7 +39,7 @@ function runTests()
     //Test 4
     console.log("Test 4: Does seperateCases() throw error if removing case not in array: ");
     try{
-        seperateCase(6, testArray);
+        seperateCase(3, testArray);
         console.log("Failed.\n");
     }
     catch {
