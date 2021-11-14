@@ -34,8 +34,10 @@ function startButtonRegister() {
             g_mode = "start";
         }*/
 
-        //unguarded (fix later)
-        let ruleset = prompt("What ruleset would you like to play with?\n1: US Ruleset\n2: UK Ruleset\n3: Multiple cases");
+		let ruleset = "";
+		while (ruleset != "1" && ruleset != "2" && ruleset != "3") {
+			ruleset = prompt("What ruleset would you like to play with?\n1: US Ruleset\n2: UK Ruleset\n3: Multiple cases");
+		}
 		gameplay(ruleset);
     });
 }
