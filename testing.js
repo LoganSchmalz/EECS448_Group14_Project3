@@ -3,7 +3,7 @@
 function runTests()
 {
     //Clears console to print tests
-    //console.clear()
+    console.clear()
 
     //Test 1: Does expectedPayout return a non-zero, positive number
     console.log("Test 1: Does expectedPayout() return a non-zero, positive number: ");
