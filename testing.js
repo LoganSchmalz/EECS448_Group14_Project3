@@ -29,9 +29,8 @@ function runTests()
     //Test 3
     console.log("Test 3: Does seperateCases() remove a value while preserving order: ");
     let testArray = [1,2,3,4,5];
-    let seperatedArray_test = chooseCase(3,testArray);
-    console.log(seperatedArray_test);
-    if(seperatedArray_test[3] == 4)
+    chooseCase(3,testArray);
+    if(testArray[3] == 4)
     {
         console.log("Passed.\n");
     }
@@ -41,7 +40,7 @@ function runTests()
     //Test 4
     console.log("Test 4: Does seperateCases() throw error if removing case not in array: ");
     try{
-        seperateCase(6, testArray);
+        chooseCase(6, testArray);
         console.log("Failed.\n");
     }
     catch {
