@@ -60,7 +60,7 @@ function registerCaseClicks(n) {
 			if (choosingCase == true) {
 				chooseCase(i);
 				choosingCase = false;
-				gameloopUS();
+				gameloop();
 			}
 		});
 	}
@@ -69,8 +69,9 @@ function registerCaseClicks(n) {
 function registerAcceptOffer() {
 	document.getElementById("accept").addEventListener('click', e => {
 		if (choosingOffer == true) {
-			acceptOfferUS();
 			choosingOffer = false;
+			document.getElementById("offer").style.display = "none";
+			acceptOffer();
 		}
 	});
 }
@@ -82,7 +83,7 @@ function registerDeclineOffer() {
 			casesEliminated = 0;
 			choosingOffer = false;
 			document.getElementById("offer").style.display = "none";
-			gameloopUS();
+			gameloop();
 		}
 	});
 }

@@ -27,7 +27,7 @@ let heldValue = 0;
 
 //setting up the US / UK arrays
 let usArrayElim = [6,5,4,3,2,1,1,1,1,1];
-let ukArrayElim = [5,3,3,3,3,3];
+let ukArrayElim = [5,3,3,3,3,3,3];
 
 let ruleset = 0;
 let round = 0;
@@ -43,27 +43,27 @@ function ukCase23(heldValue)
 	if (selection == 0)
 	{
 		//10 thousand pounds
-		console.log("Box 23 contained +£10,000, bringing your total amount won to " +  formatMoney(heldValue + 10000) + "!");
+		return ("Box 23 contained +£10,000, bringing your total amount won to " +  formatMoney(heldValue + 10000) + "!");
 	}
 	else if (selection == 1)
 	{
 		//Half
-		console.log("Box 23 contained 'Half', bringing your total amount won to " +  formatMoney(heldValue/2) + ".");
+		return ("Box 23 contained 'Half', bringing your total amount won to " +  formatMoney(heldValue/2) + ".");
 	}
 	else if (selection == 2)
 	{
 		//Money Back
-		console.log("Box 23 contained 'Money Back', which means you still win " +  formatMoney(heldValue/2) + ".");
+		return ("Box 23 contained 'Money Back', which means you still win " +  formatMoney(heldValue) + ".");
 	}
 	else if (selection == 3)
 	{
 		//Double
-		console.log("Box 23 contained 'Double', which means you now win " +  formatMoney(heldValue*2) + "!");
+		return ("Box 23 contained 'Double', which means you now win " +  formatMoney(heldValue*2) + "!");
 	}
 	else if (selection == 4)
 	{
 		//Nothing
-		console.log("Box 23 contained 'Nothing', which means you go home with absolutely nothing.");
+		return ("Box 23 contained 'Nothing', which means you go home with absolutely nothing.");
 	}
 }
 
@@ -80,16 +80,18 @@ function getRandomInt(min, max) {
 function gameplay(r)
 {
 	ruleset = r;
+	
+	resetRender();
+	resetGame();
 	if (ruleset == 1)
 	{
-		resetRender();
-		resetGame();
 		resetUS();
 		gameloopUS();
 	}
 	if (ruleset == 2)
 	{
-		gameplayUK();
+		resetUK();
+		gameloopUK();
 	}
 	if (ruleset == 3)
 	{
@@ -118,89 +120,66 @@ function resetUS()
 	caseValues = shuffle([...caseValuesUS]); //... needed to create copy, JS arrays are set by reference not by content
 	console.log(caseValues);
 	renderGame([6,7,7,6], formatMoney);
-	registerCaseClicks(26);
+	registerCaseClicks(cases.length);
 }
 
+function resetUK() 
+{
+	cases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
+	caseValuesConst = caseValuesUK;
+	console.log(caseValuesConst);
+	caseValues = shuffle([...caseValuesUK]); //... needed to create copy, JS arrays are set by reference not by content
+	console.log(caseValues);
+	renderGame([5,6,6,5], formatMoney);
+	registerCaseClicks(cases.length);
+}
+
+function gameloop() {
+	if (ruleset == 1)
+		gameloopUS();
+	else if (ruleset == 2)
+		gameloopUK();
+}
 
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. UK RULES
  */
-function gameplayUK() {
-	caseValuesConst = caseValuesUK;
-	caseValues = shuffle([...caseValuesUK]); //... needed to create copy, JS arrays are set by reference not by content
-	//renderGame([5,6,6,5], formatMoneyUK);
-
-	result = "";
-	while (!Number.isInteger(result) || !UKcases.includes(result)) {
-		result = parseInt(window.prompt("Pick a case to hold (between 1 and 22)", ""));
-		console.log(result);
-	}
-	idx = UKcases.indexOf(result);
-	heldCase = result;
-	heldValue = caseValues[idx];
-	caseValues.splice(idx, 1);
-	UKcases.splice(idx, 1);
-	console.log(UKcases);
-	
-	i = ukArrayElim[0];
-	let k = 0;
-	let iIndex = 0;
-	let j = i;
-	while (UKcases.length > 2) {
-		console.log("You have " + i + " cases to eliminate this round.\n");
-		while (k < i)
-		{
-			result = "";
-			while (!Number.isInteger(result) || !UKcases.includes(result)) {
-				result = parseInt(window.prompt("Pick a case to eliminate", ""));
-			}
-			idx = UKcases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValues[idx]) + ".\n");
-			caseValues.splice(idx, 1);
-			UKcases.splice(idx, 1);
-			console.log("The remaining cases are " + UKcases + ".\n");
-			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
-			console.log("The remaining values are " + temp + ".\n");
-			k = k + 1; 
-		}
-		k = 0;
-		offer = bankOffer(0);
-		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
-		
-		if (iIndex < ukArrayElim.length-1)
-		{
-		i = ukArrayElim[iIndex + 1];
-		iIndex = iIndex + 1;
-		j=i;
-		}
-
-		result = "";
-		while (result != "Y" && result != "N") {
-			result = window.prompt("Deal or no deal (y/n)?", "");
-			result = result.toUpperCase();
-		}
-		if (result == "Y") {
-			console.log("You won " + formatMoney(offer) + "!\n");
-			console.log("Your case had a value of " + formatMoney(heldValue) + ".");
-			if (heldValue <= offer) 
-				console.log("You made a good deal!");
-			else
-				console.log("You made a bad deal!");
+function gameloopUK() {
+	switch(round) {
+		case 0:
+			message("Please pick a box to hold.");
+			choosingCase = true;
+			break;
+		case ukArrayElim.length:
+			message("You have chosen your box and have won " + formatMoney(heldValue) + "! Would you like to purchase box 23?");
+			choosingOffer = true;
+			document.getElementById("offer").style.display = "block";
 			return;
-		}
+		//for when switching cases is implemented, the above case will be changed to the swapping cases and this case will be next
+		/*case ukArrayElim.length+1:
+			message("You have chosen your box and have won " + formatMoney(heldValue) + "! Would you like to purchase box 23?");
+			choosingOffer = true;
+			document.getElementById("offer").style.display = "block";
+			return;*/
+		case ukArrayElim.length+1:
+			message("");
+			return;
+		default:
+			if (casesEliminated != ukArrayElim[round-1]) {
+				elim = ukArrayElim[round-1]-casesEliminated;
+				message("You have " + elim + " more boxes to eliminate this round. Please pick a box to eliminate.");
+				choosingCase = true;
+			} else {
+				currentOffer = bankOffer(1);
+				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your box.");
+				choosingOffer = true;
+				document.getElementById("offer").style.display = "block";
+			}
+			break;
 	}
-	console.log("You have chosen your case and have won £" + heldValue + "!\n");
-	let b23 = "";
-	while (b23 != "Y" && b23 != "N") {
-		b23= window.prompt("Would you like to purchase case 23 (y/n)?", "");
-		b23 = b23.toUpperCase();
-	}
-	if (b23 == "Y") {
-		ukCase23(heldValue);
-	}
-	else {
-		console.log("Thanks for playing!");
-	}
+	
+	
+	//code previously implemented for switching cases, leaving here to keep the messages when implemented
 	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValuesUS[0] + ".\n");
 	result = "";
 	while (result != "Y" && result != "N") {
@@ -212,7 +191,6 @@ function gameplayUK() {
 		case "N": console.log("You won $" + heldValue + "!\n"); break;
 	}*/
 }
-
 
 
 
@@ -232,7 +210,7 @@ function gameloopUS() {
 			choosingCase = true;
 			break;
 		case usArrayElim.length:
-			message("You have chosen your case and have won $" + heldValue + "!\n")
+			message("You have chosen your case and have won " + formatMoney(heldValue) + "!");
 			return;
 		default:
 			if (casesEliminated != usArrayElim[round-1]) {
@@ -241,11 +219,26 @@ function gameloopUS() {
 				choosingCase = true;
 			} else {
 				currentOffer = bankOffer(1);
-				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your case.\n");
+				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your case.");
 				choosingOffer = true;
 				document.getElementById("offer").style.display = "block";
 			}
 			break;
+	}
+}
+
+function acceptOffer() {
+	if (ruleset == 1)
+		acceptOfferUS();
+	else if (ruleset == 2)
+		acceptOfferUK();
+}
+
+function acceptOfferUK() {
+	if (round == ukArrayElim.length) {
+		message(ukCase23(heldValue));
+	} else {
+		message("You won " + formatMoney(currentOffer) + "! Your case had a value of " + formatMoney(heldValue) + ". " + ((heldValue <= currentOffer) ? "You made a good deal!" : "You made a bad deal!"));
 	}
 }
 
@@ -450,5 +443,5 @@ function formatMoneyUK(number) {
  }
  
  function message(msg) {
-	document.getElementById("message").innerText = msg;
+	document.getElementById("message").innerHTML = msg;
  }
