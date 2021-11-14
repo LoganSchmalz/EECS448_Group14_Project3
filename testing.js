@@ -38,14 +38,16 @@ function runTests()
 
 
     //Test 4
-    console.log("Test 4: Does seperateCases() throw error if removing case not in array: ");
-    try{
-        seperateCase(6, testArray);
+    let testArray = [1,2,3,4,5];
+    console.log("Test 4: Does randomizeCases() shuffle array:  ");
+    randomizeCases(testArray);
+    randomizeCases(testArray);
+    randomizeCases(testArray);
+    if(testArray == [1,2,3,4,5])
+    {
         console.log("Failed.\n");
     }
-    catch {
-        console.log("Passed.\n");
-    }
+    else console.log("Passed.\n");
 
 
 

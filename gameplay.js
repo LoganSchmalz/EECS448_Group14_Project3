@@ -26,8 +26,8 @@ let heldCase = -1;
 let heldValue = 0;
 
 //setting up the US / UK arrays
-let usArrayElim = [6,5,4,3,2,1,1,1,1,1]
-let ukArrayElim = [5,3,3,3,3,3]
+let usArrayElim = [6,5,4,3,2,1,1,1,1,1];
+let ukArrayElim = [5,3,3,3,3,3];
 
 let ruleset = 0;
 let round = 0;
@@ -43,22 +43,22 @@ function ukCase23(heldValue)
 	if (selection == 0)
 	{
 		//10 thousand pounds
-		console.log("Box 23 contained +£10,000, bringing your total amount won to " +  formatMoneyUK(heldValue + 10000) + "!");
+		console.log("Box 23 contained +£10,000, bringing your total amount won to " +  formatMoney(heldValue + 10000) + "!");
 	}
 	else if (selection == 1)
 	{
 		//Half
-		console.log("Box 23 contained 'Half', bringing your total amount won to " +  formatMoneyUK(heldValue/2) + ".");
+		console.log("Box 23 contained 'Half', bringing your total amount won to " +  formatMoney(heldValue/2) + ".");
 	}
 	else if (selection == 2)
 	{
 		//Money Back
-		console.log("Box 23 contained 'Money Back', which means you still win " +  formatMoneyUK(heldValue/2) + ".");
+		console.log("Box 23 contained 'Money Back', which means you still win " +  formatMoney(heldValue/2) + ".");
 	}
 	else if (selection == 3)
 	{
 		//Double
-		console.log("Box 23 contained 'Double', which means you now win " +  formatMoneyUK(heldValue*2) + "!");
+		console.log("Box 23 contained 'Double', which means you now win " +  formatMoney(heldValue*2) + "!");
 	}
 	else if (selection == 4)
 	{
@@ -155,7 +155,7 @@ function gameplayUK() {
 				result = parseInt(window.prompt("Pick a case to eliminate", ""));
 			}
 			idx = UKcases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoneyUK(caseValues[idx]) + ".\n");
+			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValues[idx]) + ".\n");
 			caseValues.splice(idx, 1);
 			UKcases.splice(idx, 1);
 			console.log("The remaining cases are " + UKcases + ".\n");
@@ -165,7 +165,7 @@ function gameplayUK() {
 		}
 		k = 0;
 		offer = bankOffer(0);
-		console.log("You have received an offer from the banker: " + formatMoneyUK(offer) + " for your case.\n");
+		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
 		
 		if (iIndex < ukArrayElim.length-1)
 		{
@@ -180,8 +180,8 @@ function gameplayUK() {
 			result = result.toUpperCase();
 		}
 		if (result == "Y") {
-			console.log("You won " + formatMoneyUK(offer) + "!\n");
-			console.log("Your case had a value of " + formatMoneyUK(heldValue) + ".");
+			console.log("You won " + formatMoney(offer) + "!\n");
+			console.log("Your case had a value of " + formatMoney(heldValue) + ".");
 			if (heldValue <= offer) 
 				console.log("You made a good deal!");
 			else
@@ -377,6 +377,7 @@ function bankOffer(ruleset){
 	{
  		//calls expectedPayout method to get value of the current expected payout
   		let expPayout = expectedPayout(1);
+		 
 
   		//if expected value of remaining cases is less than initial expected value
   		if(expPayout <= basePayout_US)
@@ -388,7 +389,7 @@ function bankOffer(ruleset){
  		//if expected value of remaining cases is greater than initial expected value
   		else if(expPayout > basePayout_US)
   		{
-    		let rand = Math.random() * (1.81 - 1.1) + 1.1;
+    		let rand = Math.random() * (1.51 - 1.1) + 1.1;
     		//multiplies by random number from 1.1-1.8
     		bankOfferNum = expPayout * rand;
     	}
@@ -422,8 +423,25 @@ function bankOffer(ruleset){
 }
 
 
+function formatMoney(number)
+{
+	if (ruleset == 1)
+	{
+		return formatMoneyUS(number);
+	}
+	else if (ruleset == 2)
+	{
+		return formatMoneyUK(number);
+	}
+	else 
+	{
+		console.log("Error in formatMoney: Reached an unreachable state.\n");
+	}
+}
+
+
 //from https://stackoverflow.com/questions/4022171/how-do-i-print-currency-format-in-javascript
-function formatMoney(number) {
+function formatMoneyUS(number) {
    return '$'+ number.toLocaleString('en-US');
 }
 
