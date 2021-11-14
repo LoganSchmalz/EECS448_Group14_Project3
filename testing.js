@@ -7,7 +7,7 @@ function runTests()
 
     //Test 1: Does expectedPayout return a non-zero, positive number
     console.log("Test 1: Does expectedPayout() return a non-zero, positive number: ");
-    let expecVal_test = expectedPayout();
+    let expecVal_test = expectedPayout(1);
     if(expecVal_test > 0)
     {
         console.log("Passed.\n");
@@ -17,7 +17,7 @@ function runTests()
 
     //Test 2: Does bankOffer return a non zero positive number
     console.log("Test 2: Does bankOffer() return a non-zero, positive number: ");
-    let bankOffer_test = bankOffer();
+    let bankOffer_test = bankOffer(1);
     if(bankOffer_test > 0)
     {
         console.log("Passed.\n");
