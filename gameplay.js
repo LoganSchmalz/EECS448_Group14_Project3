@@ -378,6 +378,7 @@ function bankOffer(ruleset){
 	{
  		//calls expectedPayout method to get value of the current expected payout
   		let expPayout = expectedPayout(1);
+		 
 
   		//if expected value of remaining cases is less than initial expected value
   		if(expPayout <= basePayout_US)
@@ -389,7 +390,7 @@ function bankOffer(ruleset){
  		//if expected value of remaining cases is greater than initial expected value
   		else if(expPayout > basePayout_US)
   		{
-    		let rand = Math.random() * (1.81 - 1.1) + 1.1;
+    		let rand = Math.random() * (1.51 - 1.1) + 1.1;
     		//multiplies by random number from 1.1-1.8
     		bankOfferNum = expPayout * rand;
     	}
