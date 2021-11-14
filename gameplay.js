@@ -7,7 +7,7 @@ let caseValuesConst = [];
 let caseValues = [];
 
 //Payout if all cases are there
-let basePayout_US = 11246.7697;
+let basePayout_US = 131477.54;
 let basePayout_UK = 14814.20043;
 
 //Global variable for bank offer
