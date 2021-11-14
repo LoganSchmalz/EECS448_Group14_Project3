@@ -378,6 +378,7 @@ function bankOffer(ruleset){
 	{
  		//calls expectedPayout method to get value of the current expected payout
   		let expPayout = expectedPayout(1);
+		  console.log(expectedPayout);
 
   		//if expected value of remaining cases is less than initial expected value
   		if(expPayout <= basePayout_US)
