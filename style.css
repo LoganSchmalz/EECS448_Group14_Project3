@@ -29,7 +29,6 @@ canvas {
 
 #caseArea {
 	float: left;
-	display: table;
 }
 
 .caseRow {
@@ -43,9 +42,18 @@ canvas {
 
 #moneyArea {
 	float: left;
-	display: table;
 }
 
 #moneyArea svg {
 	margin: 10px;
+}
+
+.column {
+	float: left;
+	width: 50%;
+}
+
+#message {
+	font-size: 3em;
+	text-align: center;
 }

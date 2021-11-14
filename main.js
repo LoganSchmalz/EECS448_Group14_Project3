@@ -14,9 +14,13 @@ window.addEventListener("load", () => {
     g_context.msImageSmoothingEnabled = false;
     g_context.imageSmoothingEnabled = false;*/
 
-    startButtonRegister();
-    
+    //startButtonRegister();
+	USRulesButtonRegister();
+    UKRulesButtonRegister();
+	
     //window.requestAnimationFrame(gameplayLoop);
+	registerAcceptOffer();
+	registerDeclineOffer();
 })
 
 /**
@@ -36,5 +40,47 @@ function startButtonRegister() {
     });
 }
 
+function USRulesButtonRegister() {
+    document.getElementById("USRules").addEventListener('click', e => {
+		gameplay(1);
+    });
+}
 
+function UKRulesButtonRegister() {
+    document.getElementById("UKRules").addEventListener('click', e => {
+		gameplay(2);
+    });
+}
 
+function registerCaseClicks(n) {
+	for (let i = 1; i <= n; i++) {
+		document.getElementById(`case${i}`).addEventListener('click', e => {
+			if (choosingCase == true) {
+				chooseCase(i);
+				choosingCase = false;
+				gameloopUS();
+			}
+		});
+	}
+}
+
+function registerAcceptOffer() {
+	document.getElementById("accept").addEventListener('click', e => {
+		if (choosingOffer == true) {
+			acceptOfferUS();
+			choosingOffer = false;
+		}
+	});
+}
+
+function registerDeclineOffer() {
+	document.getElementById("decline").addEventListener('click', e => {
+		if (choosingOffer == true) {
+			round++;
+			casesEliminated = 0;
+			choosingOffer = false;
+			document.getElementById("offer").style.display = "none";
+			gameloopUS();
+		}
+	});
+}

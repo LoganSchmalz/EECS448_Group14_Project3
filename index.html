@@ -11,21 +11,32 @@
         </div>
 		
 		<details>
-			<summary>Rules</summary>
+			<summary>US Rules</summary>
 			<p>There are 26 cases with values ranging from $.01 to $1,000,000.</p>
 			<p>You will be asked to pick a case. This is your case for the game.</p>
 			<p>You will then eliminate a number of cases. Once done, the banker will<br>make you an offer to buy your case from you. You may choose Deal or<br>no Deal. </p>
 			<p>This process then repeats.</p>
 			<p>The game ends either when you make a deal or the last case will be eliminated.</p>
+			<button type="button" id="USRules">Play US rules</button>
+		</details>
+		<details>
+			<summary>UK Rules</summary>
+			<p>Placeholder</p>
+			<button type="button" id="UKRules">Play UK rules</button>
 		</details>
 		
-        <div>
+        <!--<div>
 	    	<button type="button" id="startButton">Start</button>
-        </div>
+        </div>-->
 		
 		<div id=gameArea>
-			<div id=caseArea></div>
+			<div id=message></div>
+			<div style="float:left">
+				<div id=offer style="display:none"><button type="button" id="accept">Accept</button><button type="button" id="decline">Decline</button></div>
+				<div id=caseArea></div>
+			</div>
 			<div id=moneyArea></div>
+			<br>
 		</div>
 		
     </body>

@@ -25,11 +25,17 @@ let UKcases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
 let heldCase = -1;
 let heldValue = 0;
 
-
-
 //setting up the US / UK arrays
-let usArrayElim = [6,5,4,3,2,1,1,1,1,1,1]
+let usArrayElim = [6,5,4,3,2,1,1,1,1,1]
 let ukArrayElim = [5,3,3,3,3,3]
+
+let ruleset = 0;
+let round = 0;
+let casesEliminated = 0;
+let currentOffer = 0;
+//determines what the player should be able to click on
+let choosingCase = false;
+let choosingOffer = false;
 
 function ukCase23(heldValue)
 {
@@ -71,11 +77,15 @@ function getRandomInt(min, max) {
 
 
 
-function gameplay(ruleset)
+function gameplay(r)
 {
+	ruleset = r;
 	if (ruleset == 1)
 	{
-		gameplayUS();
+		resetRender();
+		resetGame();
+		resetUS();
+		gameloopUS();
 	}
 	if (ruleset == 2)
 	{
@@ -85,6 +95,30 @@ function gameplay(ruleset)
 	{
 
 	}
+}
+
+function resetGame() {
+	caseValuesConst = [];
+	caseValues = [];
+	bankOfferNum = 0;
+	heldCase = -1;
+	heldValue = 0;
+	choosingCase = false;
+	choosingOffer = false;
+	round = 0;
+	casesEliminated = 0;
+	currentOffer = 0;
+}
+
+function resetUS() 
+{
+	cases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
+	caseValuesConst = caseValuesUS;
+	console.log(caseValuesConst);
+	caseValues = shuffle([...caseValuesUS]); //... needed to create copy, JS arrays are set by reference not by content
+	console.log(caseValues);
+	renderGame([6,7,7,6], formatMoney);
+	registerCaseClicks(26);
 }
 
 
@@ -188,81 +222,37 @@ function gameplayUK() {
 
 //BIG GAP SO YOU DONT CONFUSE 'EM
 
-
-
-
-
-
-
-
 /**
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data. US RULES
  */
-function gameplayUS() {
-	caseValuesConst = caseValuesUS;
-	caseValues = shuffle([...caseValuesUS]); //... needed to create copy, JS arrays are set by reference not by content
-	//renderGame([6,7,7,6], formatMoney);
-	
-	result = "";
-	while (!Number.isInteger(result) || !cases.includes(result)) {
-		result = parseInt(window.prompt("Pick a case to hold (between 1 and 26)", ""));
-		console.log(result);
-	}
-	idx = cases.indexOf(result);
-	heldCase = result;
-	heldValue = caseValues[idx];
-	caseValues.splice(idx, 1);
-	cases.splice(idx, 1);
-	console.log(cases);
-	
-	i = 6;
-	while (cases.length > 2) {
-		console.log("You have " + i + " cases to eliminate this round.\n");
-		for (j = i; j > 0; j--) {
-			result = "";
-			while (!Number.isInteger(result) || !cases.includes(result)) {
-				result = parseInt(window.prompt("Pick a case to eliminate", ""));
-			}
-			idx = cases.indexOf(result);
-			console.log("You eliminated case " + result + " which contained " + formatMoney(caseValues[idx]) + ".\n");
-			caseValues.splice(idx, 1);
-			cases.splice(idx, 1);
-			console.log("The remaining cases are " + cases + ".\n");
-			temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
-			console.log("The remaining values are " + temp + ".\n");
-		}
-		offer = bankOffer(1);
-		console.log("You have received an offer from the banker: " + formatMoney(offer) + " for your case.\n");
-		
-		result = "";
-		while (result != "Y" && result != "N") {
-			result = window.prompt("Deal or no deal (y/n)?", "");
-			result = result.toUpperCase();
-		}
-		if (result == "Y") {
-			console.log("You won " + formatMoney(offer) + "!\n");
-			console.log("Your case had a value of " + formatMoney(heldValue) + ".");
-			if (heldValue <= offer) 
-				console.log("You made a good deal!");
-			else
-				console.log("You made a bad deal!");
+function gameloopUS() {
+	switch(round) {
+		case 0:
+			message("Please pick a case to hold.");
+			choosingCase = true;
+			break;
+		case usArrayElim.length+1:
+			message("You have chosen your case and have won $" + heldValue + "!\n")
 			return;
-		}
-		i = (i > 1) ? i-1 : 1;
+		default:
+			if (casesEliminated != usArrayElim[round-1]) {
+				elim = usArrayElim[round-1]-casesEliminated;
+				message("You have " + elim + " more cases to eliminate this round. Please pick a case to eliminate.");
+				choosingCase = true;
+			} else {
+				currentOffer = bankOffer(1);
+				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your case.\n");
+				choosingOffer = true;
+				document.getElementById("offer").style.display = "block";
+				if (round == usArrayElim.length-1) { round++; } //ensures last round only asks to accept an offer and then goes to game end if offer is declined
+			}
+			break;
 	}
-	console.log("You have chosen your case and have won $" + heldValue + "!\n");
-	/*console.log("There are two cases left, the one you have and one more case. They contain $" + heldValue + " or $" + caseValues[0] + ".\n");
-	result = "";
-	while (result != "Y" && result != "N") {
-		result = window.prompt("Would you like to swap cases (y/n)?", "");
-		result = result.toUpperCase();
-	}
-	switch (result) {
-		case "Y": console.log("You won $" + caseValues[0] + "!\n"); break;
-		case "N": console.log("You won $" + heldValue + "!\n"); break;
-	}*/
 }
 
+function acceptOfferUS() {
+	message("You won " + formatMoney(currentOffer) + "! Your case had a value of " + formatMoney(heldValue) + ". " + ((heldValue <= currentOffer) ? "You made a good deal!" : "You made a bad deal!"));
+}
 
 /**
  * @desc pseudorandomly shuffles array (from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
@@ -303,19 +293,28 @@ function randomizeCases(Cases)
  * @desc removes selected case while keeping the order of the cases the same (1,2,3,4 -> remove 3 -> 1,2,4)
  * @returns cases that was separated
  */
-function separateCase(choice, cases)
+function chooseCase(i)
 {
-        let tmp=cases[choice-1];
-        let index = choice-1;
-
-        for (let i = index; i < cases.length-1;i++)
-        {
-            cases[i] = cases[i+1];
-        }
-        cases[cases.length-1] =tmp;
-        return (cases.pop()); 
-
-        
+	idx = cases.indexOf(i);
+	val = caseValues[idx];
+	if (heldCase != -1) {
+		console.log("You eliminated case " + i + " which contained " + formatMoney(val) + ".\n");
+		caseValues.splice(idx, 1);
+		cases.splice(idx, 1);
+		console.log("The remaining cases are " + cases + ".\n");
+		temp = [heldValue].concat(caseValues).sort((a, b) => a - b);
+		console.log("The remaining values are " + temp + ".\n");
+		casesEliminated++;
+	} else {
+		heldCase = i;
+		heldValue = val;
+		caseValues.splice(idx, 1);
+		cases.splice(idx, 1);
+		console.log(cases);
+		round++;
+	}
+	document.getElementById(`case${i}`).style.visibility = "hidden";
+	document.getElementById(`val${val}`).style.visibility = "hidden";	
 }
 
 
@@ -325,11 +324,12 @@ function separateCase(choice, cases)
  * @returns expected value of remaining cases
  */
 function expectedPayout(ruleset){
+	temp = [heldValue].concat(caseValues);
 	//if US rules are selected	
 	if(ruleset == 1)
     {
   		//number of cases left
-  		let n = caseValues.length;
+  		let n = temp.length;
 
   		//probability of selecting each case
   		let Px = (1/n);
@@ -340,7 +340,7 @@ function expectedPayout(ruleset){
   		//summation of P(x)*x
   		for(let i=0; i < n; i++)
   		{
-   		 	payout = payout + (caseValues[i]*Px)
+   		 	payout = payout + (temp[i]*Px)
   		}
   		return payout;
     }
@@ -348,7 +348,7 @@ function expectedPayout(ruleset){
 	else if(ruleset == 0)
 	{
 		//number of cases left
-		let n = caseValues.length;
+		let n = temp.length;
 
 		  //probability of selecting each case
 		  let Px = (1/n);
@@ -359,7 +359,7 @@ function expectedPayout(ruleset){
 		  //summation of P(x)*x
 		  for(let i=0; i < n; i++)
 		  {
-			payout = payout + (caseValues[i]*Px)
+			payout = payout + (temp[i]*Px)
 		  }
 		return payout;
 	}
@@ -430,4 +430,8 @@ function formatMoney(number) {
 
 function formatMoneyUK(number) {
 	return '&#163;'+ number.toLocaleString('en-US');
+ }
+ 
+ function message(msg) {
+	document.getElementById("message").innerText = msg;
  }
