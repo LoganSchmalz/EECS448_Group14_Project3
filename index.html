@@ -5,29 +5,26 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
     <body>
-        <div>
-            <h1>Deal or No Deal</h1>
-            <p>Welcome to Deal or No Deal!</p>
-        </div>
-		
-		<details>
-			<summary>US Rules</summary>
-			<p>There are 26 cases with values ranging from $.01 to $1,000,000.</p>
-			<p>You will be asked to pick a case. This is your case for the game.</p>
-			<p>You will then eliminate a number of cases. Once done, the banker will<br>make you an offer to buy your case from you. You may choose Deal or<br>no Deal. </p>
-			<p>This process then repeats.</p>
-			<p>The game ends either when you make a deal or the last case will be eliminated.</p>
-			<button type="button" id="USRules">Play US rules</button>
-		</details>
-		<details>
-			<summary>UK Rules</summary>
-			<p>Placeholder</p>
-			<button type="button" id="UKRules">Play UK rules</button>
-		</details>
-		
-        <!--<div>
-	    	<button type="button" id="startButton">Start</button>
-        </div>-->
+		<header>
+			<h1>Deal or No Deal</h1>
+			
+			<div class="tooltip">
+				<button type="button" id="USRules">Play US rules</button>
+				<span class="tooltiptext">
+					<p>There are 26 cases with values ranging from $.01 to $1,000,000.</p>
+					<p>You will be asked to pick a case. This is your case for the game.</p>
+					<p>You will then eliminate a number of cases. Once done, the banker will<br>make you an offer to buy your case from you. You may choose Deal or<br>no Deal. </p>
+					<p>This process then repeats.</p>
+					<p>The game ends either when you make a deal or the last case will be eliminated.</p>
+				</span>
+			</div>
+			<div class="tooltip">
+				<button type="button" id="UKRules">Play UK rules</button>
+				<span class="tooltiptext">
+					Placeholder
+				</span>
+			</div>
+		</header>
 		
 		<div id=gameArea>
 			<div id=message></div>
