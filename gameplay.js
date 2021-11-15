@@ -151,16 +151,16 @@ function gameloopUK() {
 			choosingCase = true;
 			break;
 		case ukArrayElim.length:
-			message("You have chosen your box and have won " + formatMoney(heldValue) + "! Would you like to purchase box 23?");
+			message("Would you like to switch boxes?");
 			choosingOffer = true;
 			document.getElementById("offer").style.display = "block";
 			return;
 		//for when switching cases is implemented, the above case will be changed to the swapping cases and this case will be next
-		/*case ukArrayElim.length+1:
-			message("You have chosen your box and have won " + formatMoney(heldValue) + "! Would you like to purchase box 23?");
+		case ukArrayElim.length+1:
+			message("Your chosen box contained " + formatMoney(heldValue) + "! Would you like to purchase box 23?");
 			choosingOffer = true;
 			document.getElementById("offer").style.display = "block";
-			return;*/
+			return;
 		case ukArrayElim.length+1:
 			message("");
 			return;
@@ -235,8 +235,17 @@ function acceptOffer() {
 }
 
 function acceptOfferUK() {
-	if (round == ukArrayElim.length) {
+	if (round == ukArrayElim.length + 1) {
 		message(ukCase23(heldValue));
+	} else if (round == ukArrayElim.length) {
+		temp = heldCase;
+		tempVal = heldValue;
+		heldValue = caseValues[0];
+		heldCase = cases[0];
+		caseValues[0] = tempVal;
+		cases[0] = temp;
+		round++;
+		gameloopUK();
 	} else {
 		message("You won " + formatMoney(currentOffer) + "! Your case had a value of " + formatMoney(heldValue) + ". " + ((heldValue <= currentOffer) ? "You made a good deal!" : "You made a bad deal!"));
 	}
