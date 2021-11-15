@@ -45,12 +45,17 @@ function startButtonRegister() {
 function USRulesButtonRegister() {
     document.getElementById("USRules").addEventListener('click', e => {
 		gameplay(1);
-    });
+		document.getElementById("caseArea").style.border = "solid";
+		document.getElementById("moneyArea").style.border = "dotted";
+		//document.getElementById("gameArea").style.border = "solid";
+	});
 }
 
 function UKRulesButtonRegister() {
     document.getElementById("UKRules").addEventListener('click', e => {
 		gameplay(2);
+		document.getElementById("caseArea").style.border = "solid";
+		document.getElementById("moneyArea").style.border = "dotted";
     });
 }
 
