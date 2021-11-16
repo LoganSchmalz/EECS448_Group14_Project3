@@ -170,7 +170,7 @@ function gameloopUK() {
 				message("You have " + elim + " more boxes to eliminate this round. Please pick a box to eliminate.");
 				choosingCase = true;
 			} else {
-				currentOffer = bankOffer(1);
+				currentOffer = bankOffer(2);
 				message("You have received an offer from the banker: " + formatMoney(currentOffer) + " for your box.");
 				choosingOffer = true;
 				document.getElementById("offer").style.display = "block";
