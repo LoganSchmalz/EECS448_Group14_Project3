@@ -48,8 +48,10 @@ function runTests()
     try {
         randomizeCases(5);
         console.log("Failed.\n");
-    } catch (error) {console.log("Passed.\n");
-        
+    } catch {
+        console.log("Passed.\n");
     }
+        
+    
 
 }
