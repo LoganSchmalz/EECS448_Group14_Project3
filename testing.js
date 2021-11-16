@@ -46,14 +46,14 @@ function runTests()
 
     //Test 5
     console.log("Test 5: Does randomizeCases throw error on improper value: ");
-    randomizeCases(5);
-    /*try {
 
+    try {
+    randomizeCases('a');
         console.log("Failed.\n");
     } catch {
         console.log("Passed.\n");
     }
-        */
+        
     
 
 }
