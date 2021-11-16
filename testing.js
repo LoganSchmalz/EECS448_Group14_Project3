@@ -43,15 +43,17 @@ function runTests()
     }
     else console.log("Passed.\n");
 
+
     //Test 5
     console.log("Test 5: Does randomizeCases throw error on improper value: ");
-    try {
-        randomizeCases(5);
+    randomizeCases(5);
+    /*try {
+
         console.log("Failed.\n");
     } catch {
         console.log("Passed.\n");
     }
-        
+        */
     
 
 }
