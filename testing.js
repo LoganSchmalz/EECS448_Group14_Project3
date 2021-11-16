@@ -36,18 +36,9 @@ function runTests()
     else console.log("Failed.\n");
 
 
+
     //Test 4
-    console.log("Test 4: Does formatMoneyUK() return a monetary value, while keeping the number the same: ");
-    let testNumUK = formatMoneyUK(67340);
-    if(testNumUK == "£67,340"){
-        console.log("Passed.\n");
-    }
-    else console.log("Failed.\n");
-
-
-
-    //Test 5
-    console.log("Test 5: Does randomizeCases randomize the array of cases: ");
+    console.log("Test 4: Does randomizeCases randomize the array of cases: ");
     let testArray = [1,2,3,4,5,6,7,8]
     randomizeCases(testArray);
     if(testArray == [1,2,3,4,5,6,7,8]){
