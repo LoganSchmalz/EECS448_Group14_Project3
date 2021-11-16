@@ -34,5 +34,13 @@ function runTests()
     else console.log("Failed.\n");
 
 
+    //Test 4
+    console.log("Test 4: Does randomizeCases randomize the array of cases: ");
+    let testArray = [1,2,3,4,5,6,7,8]
+    randomizeCases(testArray);
+    if(testArray == [1,2,3,4,5,6,7,8]){
+        console.log("Failed.\n");
+    }
+    else console.log("Passed.\n");
 
 }
