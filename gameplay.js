@@ -346,7 +346,7 @@ function expectedPayout(ruleset){
   		return payout;
     }
 
-	else if(ruleset == 0)
+	else if(ruleset == 2)
 	{
 		//number of cases left
 		let n = temp.length;
@@ -400,7 +400,7 @@ function bankOffer(ruleset){
 	}
 
 	//if UK rules are selected
-	else if(ruleset == 0)
+	else if(ruleset == 2)
 	{
  		//calls expectedPayout method to get value of the current expected payout
 		 let expPayout = expectedPayout(0);
