@@ -45,14 +45,14 @@ function runTests()
 
 
     //Test 5
-    console.log("Test 5: Does randomizeCases throw error on improper value: ");
-
-    try {
-    randomizeCases('a');
-        console.log("Failed.\n");
-    } catch {
+    console.log("Test 5: Does resetUS() reset the case array: ");
+    resetUS();
+    if(cases ==  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26])
+    {
         console.log("Passed.\n");
     }
+    else console.log('Failed.\n');
+
         
     
 
