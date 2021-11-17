@@ -37,12 +37,13 @@ function runTests()
     }
     else console.log("Failed.\n")
 
+
       //Test 4: Does bankOffer return a non zero positive number
       console.log("Test 4: Does bankOffer() return a non-zero, positive number for UK: ");
       gameplay(2);
-      let bankOffer_testUS = bankOffer(2);
+      let bankOffer_testUK = bankOffer(2);
       
-      if(bankOffer_testUS > 0 )
+      if(bankOffer_testUK > 0 )
       {
           console.log("Passed.\n");
       }
