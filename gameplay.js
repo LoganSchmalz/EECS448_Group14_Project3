@@ -116,9 +116,7 @@ function resetUS()
 {
 	cases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
 	caseValuesConst = caseValuesUS;
-	console.log(caseValuesConst);
 	caseValues = shuffle([...caseValuesUS]); //... needed to create copy, JS arrays are set by reference not by content
-	console.log(caseValues);
 	renderGame([6,7,7,6], formatMoney);
 	registerCaseClicks(cases.length);
 }
@@ -127,9 +125,7 @@ function resetUK()
 {
 	cases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
 	caseValuesConst = caseValuesUK;
-	console.log(caseValuesConst);
 	caseValues = shuffle([...caseValuesUK]); //... needed to create copy, JS arrays are set by reference not by content
-	console.log(caseValues);
 	renderGame([5,6,6,5], formatMoney);
 	registerCaseClicks(cases.length);
 }
