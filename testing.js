@@ -1,4 +1,10 @@
-
+/**
+ * JavaScript Testing File
+ * Run tests by calling runTests() in Chrome Developer Console
+ * 
+ * Author: Dom D'Attilio
+ * Date: 11/18/2021
+ */
 
 
 /**
