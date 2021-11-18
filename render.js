@@ -1,8 +1,25 @@
+/**
+ * Render file
+ * Contains functions for rendering DOM elements
+ * 
+ * Author: Logan Schmalz
+ * Date: 11/18/2021
+ */
+
+/**
+ * @callback requestCallback
+ * @desc This function renders the DOM elements (cases, value list)
+ * @param {number[]} the pattern for placing cases
+ * @param {requestCallback} format the money formatting function
+ * @returns {string} the input value formatted as currency
+ */
 function renderGame(casePattern, format) {
 	const gameArea = document.getElementById("gameArea");
 	const caseArea = document.getElementById("caseArea");
 	const moneyArea = document.getElementById("moneyArea");
 	
+	
+	//this section generates the cases
 	totalCases = casePattern.reduce((a,b)=>a+b);
 	
 	for (i of casePattern) {
@@ -26,6 +43,7 @@ function renderGame(casePattern, format) {
 		totalCases -= i;
 	}
 	
+	//this section generates two columns for case values, we reset total cases because it is modified in the case generation
 	totalCases = casePattern.reduce((a,b)=>a+b);
 	let col = document.createElement("div");
 	col.className = "column";
@@ -41,6 +59,7 @@ function renderGame(casePattern, format) {
 		col.appendChild(document.createElement("br"));
 	}
 	moneyArea.appendChild(col);
+	//second loop for second column
 	col = document.createElement("div");
 	col.className = "column";
 	for (i = 1; i <= totalCases/2; i++) {
@@ -57,6 +76,9 @@ function renderGame(casePattern, format) {
 	moneyArea.appendChild(col);
 }
 
+/**
+ * @desc This function clears the rendering to the DOM
+ */
 function resetRender() {
 	const gameArea = document.getElementById("gameArea");
 	const caseArea = document.getElementById("caseArea");
